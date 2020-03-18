@@ -1,0 +1,19 @@
+body{
+  background-color: white;
+}
+
+.container{
+  width: 600px;
+  margin: auto;
+  background-color: aliceblue;
+  padding: 20px;
+  border: blue 3px solid;
+  border-radius: 10px;
+}
+
+#feedback{
+  background-color: yellow;
+  color: red;
+  font-size: 30px;
+  font-weight: bold;
+}
