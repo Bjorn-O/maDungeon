@@ -33,12 +33,19 @@ locations[23] = "Storage Room";//Holy Water
 locations[25] = "Tower";// Nothing
 locations[26] = "Widow's Walk";// Gargoyles & Big Key
 
+let treasures = [];
+treasures[6] = "Whip";
+treasures[15] = "Morning Star";
+treasures[22] = "Torch";
+treasures[23] = "Holy Water";
+
+let inventory = [];
+
 let monsters = [];
 monsters[6] = "Shambling Mound";
 monsters[7] = "Dracula";
 monsters[10] = "Undead";
 monsters[26] = "Gargoyle";
-
 
 let images = [];
 images[0] = "room0.jpg";
@@ -69,12 +76,12 @@ directions[23] = ["NORTH"];
 directions[25] = ["DOWN", "EAST"];
 directions[26] = ["WEST"];
 
-let unlockedDirections = [];
-unlockedDirections[7] = ["SOUTH", "NORTH"];
-unlockedDirections[11] = ["WEST", "SOUTH", "NORTH"];
-unlockedDirections[12] = ["SOUTH", "NORTH"];
-unlockedDirections[16] = ["NORTH", "EAST", "WEST"];
-unlockedDirections[18] = ["NORTH", "WEST", "SOUTH"];
+let lockedDirections = [];
+lockedDirections[7] = ["SOUTH", "NORTH"];
+lockedDirections[11] = ["WEST", "SOUTH", "NORTH"];
+lockedDirections[12] = ["SOUTH", "NORTH"];
+lockedDirections[16] = ["NORTH", "EAST", "WEST"];
+lockedDirections[18] = ["NORTH", "WEST", "SOUTH"];
 
 let descriptions = [];
 descriptions[2] = "Before you an orb, shining a brilliant red. The source of the power that fuels both Dracula and his castle. Naught will stop you and no one to take this right away, you've become victorious in your quest.";
@@ -103,9 +110,6 @@ descriptions[26] = "A walk-way around the tower, high up in the air. Suddenly, a
 
 alternateDescriptions = []; // Will be used to change descriptions of the previous Array.
 
-
-
-treasures = [];
 
 myInput.addEventListener('keydown', getInput, false);
 
@@ -148,9 +152,13 @@ function getInput(evt) {
       myInput.value = "";
     }
 
+
     if (inputArray[0] == "SEARCH") {
-      console.log('SEARCH');
-      myInput.value = "";
+      if (checkItem) {
+        inventory.push(treasures[currentLocation]);
+        treasures[currentLocation] = null;
+        console.log(inventory);
+      }
     }
 
     if (inputArray[0] == "USE"){
@@ -159,8 +167,8 @@ function getInput(evt) {
 
     if (inputArray[0] == "UNLOCK"){
       if (checkLock(currentLocation) == true) {
-        directions[currentLocation] = unlockedDirections[currentLocation];
-        unlockedDirections[currentLocation] = null;
+        directions[currentLocation] = lockedDirections[currentLocation];
+        lockedDirections[currentLocation] = null;
         giveLocation();
         console.log("The door is unlocked!");
       }
@@ -169,7 +177,7 @@ function getInput(evt) {
       }
     }
 
-    if (inputArray[0] != "GO" && inputArray[0] != "USE" && inputArray[0] != "UNLOCK" && inputArray[0] != "" ){
+    if (inputArray[0] != "GO" && inputArray[0] != "USE" && inputArray[0] != "UNLOCK" && inputArray[0] != "SEARCH" ){
       feedback.innerHTML = "Please use; GO, USE, SEARCH";
       myInput.value = "";
       setTimeout(removeFeedback, 4000);
@@ -179,9 +187,21 @@ function getInput(evt) {
 }
 //FUNCTIONS TO CHECK THE VARIABLE THINGS ONE CAN FIND IN THE CASTLE
 
+function checkItem(a) {
+  console.log(currentLocation);
+  if (treasures[a] != null) {
+    console.log("There's an item.");
+    return true;
+  }
+  else {
+    console.log("There's not an item.");
+    return false;
+  }
+}
+
 //To see if there's a locked door.
 function checkLock(a) {
-  if (unlockedDirections[a] == null) {
+  if (lockedDirections[a] == null) {
     return false;
   }
   else {
@@ -192,12 +212,12 @@ function checkLock(a) {
 //To see if there's a monster.
 function checkMonster(a) {
   if (monster[a] == null) {
-    return false;
     console.log("No Monsters")
+    return false;
   }
   else {
-    return true;
     console.log("AH! Spoopy monstah!")
+    return true;
   }
 }
 
