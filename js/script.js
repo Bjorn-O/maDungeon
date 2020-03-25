@@ -170,21 +170,12 @@ function getInput(evt) {
     }
 
     if (inputArray[0] == "USE"){
-        if (i = 0, inputArray[1] != inventory[i], i++) {
-          switch (inputArray[1]) {
-            case "Whip":
-              console.log("Used Whip!")
-              break;
-            case "Torch":
-
-              break;
-            case "Morning-Star":
-
-              break;
-            case "Holy-Water":
-
-              break;
-          }
+        inventory.forEach((element)=> {
+          if (i = 0, element == inputArray[1]) {
+            i++
+            console.log("You have this item")
+            }
+          })
         } else {
           feedback.innerHTML = "Invalid Input";
           setTimeout(removeFeedback, 2000);
@@ -213,7 +204,6 @@ function getInput(evt) {
     }
 
   }
-}
 //FUNCTIONS TO CHECK THE VARIABLE THINGS ONE CAN FIND IN THE CASTLE
 
 function checkItem(a) {
