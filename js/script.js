@@ -31,13 +31,31 @@ locations[21] = "Guest's Chambers"; //Key
 locations[22] = "Entrance"; //Torch
 locations[23] = "Storage Room";//Holy Water
 locations[25] = "Tower";// Nothing
-locations[26] = "Widow's Walk";// Gargoyles & Big Key
+locations[26] = "Balcony";// Gargoyles & Big Key
+
+let images = [];
+images[2] = "Castle_Heart.jpg"; //Change with vicotry screen?
+images[6] = "Greenhouse.jpg";
+images[7] = "Dracula'sChamber.jpg";
+images[10] = "Castle's Yard.jpg";
+images[11] = "Garden.jpg";
+images[12] = "Grandhall.jpg";
+images[13] = "Kitchen.jpg";
+images[15] = "SecretChamber.jpg"
+images[16] = "Library.jpg";
+images[17] = "Hallway.jpg";
+images[18] = "DiningHall.jpg";
+images[21] = "GuestChambers.jpg";
+images[22] = "Entrance.jpg";
+images[23] = "StorageRoom.jpg";
+images[25] = "tower.jpg";
+images[26] = "Balcony.png";
 
 let treasures = [];
 treasures[6] = "Whip";
-treasures[15] = "Morning Star";
+treasures[15] = "Morning-Star";
 treasures[22] = "Torch";
-treasures[23] = "Holy Water";
+treasures[23] = "Holy-Water";
 
 let inventory = [];
 
@@ -47,22 +65,12 @@ monsters[7] = "Dracula";
 monsters[10] = "Undead";
 monsters[26] = "Gargoyle";
 
-let images = [];
-images[0] = "room0.jpg";
-images[1] = "room1.jpg";
-images[2] = "room2.jpg";
-images[3] = "room3.jpg";
-images[4] = "room4.jpg";
-images[5] = "room5.jpg";
-images[6] = "room6.jpg";
-images[7] = "room7.jpg";
-images[8] = "room8.jpg";
 
 let directions = [];
 directions[2] = ["SOUTH"];
 directions[6] = ["SOUTH"];
 directions[7] = ["SOUTH"]; // Unlock NORTH when Dracula is defeated
-directions[10] = ["WEST","EAST"];
+directions[10] = ["EAST"];
 directions[11] = ["WEST","SOUTH"]; //Unlock NORTH with key
 directions[12] = ["SOUTH"]; //Unlock NORTH with Big key
 directions[13] = ["SOUTH"];
@@ -102,7 +110,7 @@ descriptions[17] = "A simple hallway with many doors, and even a stairway up.";
 descriptions[18] = "A long table decorated with a red runner, large wooden thrones line the sides and it seats 16. A door leads to the kitchen, yet there appears to be a locked cellar door.";
 // Change when the cellar door is opened.
 descriptions[21] = "A collection of rooms, all with a bed, a dressoir, and a small table and chair. Many of these rooms haven't seen use in decades.";
-descriptions[22] = "A tall wooden door from which you entered accompanied by a hallway to the north and a brass door to the west.";
+descriptions[22] = "Before you stands a tall, cold, intimidating manions. Many stories have taught you well of the man of this manor. Dracula. With determination in your heart, you go forward.";
 descriptions[23] = "A damp dark cellar filled with crates and barrels";
 descriptions[25] = "A long stairway heading upwards leading to a singular passageway to the Widow Walk";
 descriptions[26] = "A walk-way around the tower, high up in the air. Suddenly, a crackling noice reveals a disguised foe. A Gargoyle sitting on the edge takes flight."
@@ -162,7 +170,28 @@ function getInput(evt) {
     }
 
     if (inputArray[0] == "USE"){
-      myInput.value = "";
+        if (i = 0, inputArray[1] != inventory[i], i++) {
+          switch (inputArray[1]) {
+            case "Whip":
+              console.log("Used Whip!")
+              break;
+            case "Torch":
+
+              break;
+            case "Morning-Star":
+
+              break;
+            case "Holy-Water":
+
+              break;
+          }
+        } else {
+          feedback.innerHTML = "Invalid Input";
+          setTimeout(removeFeedback, 2000);
+
+        }
+        giveLocation();
+        myInput.value = "";
     }
 
     if (inputArray[0] == "UNLOCK"){
