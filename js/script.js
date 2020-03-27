@@ -1,3 +1,4 @@
+{
 const divLocation = document.getElementById('location');
 const myPossibilities = document.getElementById('possibilities');
 const myInput = document.getElementById('myInput');
@@ -5,17 +6,18 @@ const feedback = document.getElementById('feedback');
 const imageLocation = document.getElementById('imageLocation');
 const myDescription = document.getElementById('description');
 const myInventory = document.getElementById('inventory');
-
+}
+//Where the player currently is
 let currentLocation = 22;
-
+// Which monsters are currently alive
 let draculaAlive = true;
 let vineMonsterAlive = true;
 let undeadMonsterAlive = true;
 let gargoylesAlive = true;
-
+// Amount of Generic keys the player has
 let keys = 0;
-
-let locations = [];
+//The locations where you can go and what they should contain
+let locations = []; {
 locations[2] = "Castle's Heart"; // You win
 locations[6] = "Green House"; // Vine Monster + Whip
 locations[7] = "Dracula's Chambers"; // Dracula
@@ -32,8 +34,9 @@ locations[22] = "Entrance"; //Torch
 locations[23] = "Storage Room";//Holy Water
 locations[25] = "Tower";// Nothing
 locations[26] = "Balcony";// Gargoyles & Big Key
-
-let images = [];
+}
+//Images to represent the locations
+let images = [];{
 images[2] = "Castle_Heart.jpg"; //Change with vicotry screen?
 images[6] = "Greenhouse.jpg";
 images[7] = "Dracula'sChamber.jpg";
@@ -50,23 +53,25 @@ images[22] = "Entrance.jpg";
 images[23] = "StorageRoom.jpg";
 images[25] = "tower.jpg";
 images[26] = "Balcony.png";
-
-let treasures = [];
+}
+//Items you can find
+let treasures = [];{
 treasures[6] = "Whip";
 treasures[15] = "Morning-Star";
 treasures[22] = "Torch";
 treasures[23] = "Holy-Water";
-
+}
+//An empty array where your items which you'll find be added to
 let inventory = [];
-
-let monsters = [];
-monsters[6] = "Shambling Mound";
-monsters[7] = "Dracula";
-monsters[10] = "Undead";
-monsters[26] = "Gargoyle";
-
-
-let directions = [];
+//Where the monsters are
+let monsterLocation = [];{
+monsterLocation[6] = "Shambling Mound";
+monsterLocation[7] = "Dracula";
+monsterLocation[10] = "Undead";
+monsterLocation[26] = "Gargoyle";
+}
+//Which directions you can go
+let directions = [];{
 directions[2] = ["SOUTH"];
 directions[6] = ["SOUTH"];
 directions[7] = ["SOUTH"]; // Unlock NORTH when Dracula is defeated
@@ -83,15 +88,17 @@ directions[22] = ["NORTH", "WEST"];
 directions[23] = ["NORTH"];
 directions[25] = ["DOWN", "EAST"];
 directions[26] = ["WEST"];
-
-let lockedDirections = [];
+}
+//Which directions you can go after unlocking certain doors
+let lockedDirections = [];{
 lockedDirections[7] = ["SOUTH", "NORTH"];
 lockedDirections[11] = ["WEST", "SOUTH", "NORTH"];
 lockedDirections[12] = ["SOUTH", "NORTH"];
 lockedDirections[16] = ["NORTH", "EAST", "WEST"];
 lockedDirections[18] = ["NORTH", "WEST", "SOUTH"];
-
-let descriptions = [];
+}
+//descriptions of the different locals
+let descriptions = [];{
 descriptions[2] = "Before you an orb, shining a brilliant red. The source of the power that fuels both Dracula and his castle. Naught will stop you and no one to take this right away, you've become victorious in your quest.";
 descriptions[6] = "Creeping vines surround the room, crawling and grasping to the walls and floors. In the center a bulb with a gaping maw, secreting a sweet smelling substance and leering at you with his eyeless body.";
 // Change when the Vine Monster is defeated
@@ -115,9 +122,10 @@ descriptions[23] = "A damp dark cellar filled with crates and barrels";
 descriptions[25] = "A long stairway heading upwards leading to a singular passageway to the Widow Walk";
 descriptions[26] = "A walk-way around the tower, high up in the air. Suddenly, a crackling noice reveals a disguised foe. A Gargoyle sitting on the edge takes flight."
 // Change when the Gargoyle is defeated.
-
-alternateDescriptions = []; // Will be used to change descriptions of the previous Array.
-
+}
+//descriptions of the different locals after specific events
+let alternateDescriptions = [];{ // Will be used to change descriptions of the previous Array.
+}
 
 myInput.addEventListener('keydown', getInput, false);
 
@@ -229,8 +237,8 @@ function checkLock(a) {
 }
 
 //To see if there's a monster.
-function checkMonster(a) {
-  if (monster[a] == null) {
+function checkMonsterLocation(a) {
+  if (monsterLocation[a] == null) {
     console.log("No Monsters")
     return false;
   }
