@@ -5,7 +5,7 @@ const myInput = document.getElementById('myInput');
 const feedback = document.getElementById('feedback');
 const imageLocation = document.getElementById('imageLocation');
 const myDescription = document.getElementById('description');
-let  myInventory = document.getElementById('inventory');
+let  myInventory = document.getElementById('displayInventory');
 let myKeys = document.getElementById('key')
 
 //Where the player currently is
@@ -191,7 +191,9 @@ function getInput(evt) {
           case 22:
           inventory.push(treasures[currentLocation]);
           treasures[currentLocation] = null;
-          // myInventory.innerHTML += "<li>Torch</li>";
+          console.log(myInventory.innerHTML)
+          myInventory.innerHTML += "<li>Torch</li>";
+          console.log(myInventory.innerHTML)
           console.log("Torch");
             break;
           case 23:
@@ -218,7 +220,7 @@ function getInput(evt) {
         console.log("You used" + inputArray[1]);
       }
       else {
-        feedback.innerHTML = "Invalid Input";
+        feedback.innerHTML = "You do not have a(n) " + inputArray[1];
         setTimeout(removeFeedback, 2000);
       }
       giveLocation();
@@ -314,16 +316,8 @@ function giveLocation() {
     myDirections += "<li>" + directions[currentLocation][i] + "</li>";
   }
   myPossibilities.innerHTML = myDirections;
-  myInventory.innerHTML = "Your inventory:"
+  myInventory.innerHTML = "Your inventory: "
   myKeys.innerHTML = "Keys: " + keys;
-  if (inventory.length > 0) {
-    for (let i = 0; i < inventory.length; i++) {
-      myInventory += "<li>" + inventory[i] + "</li>";
-    }
-  }
-  else {
-    myInventory.innerHTML +=  " is currently empty.";
-  }
 }
 
 function removeFeedback() {
