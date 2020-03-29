@@ -226,7 +226,7 @@ function getInput(evt) {
     }
 
     if (inputArray[0] == "UNLOCK"){
-      if (checkLock(currentLocation) && keys > 0) {
+      if (checkLock(currentLocation) && keys > 0 && currentLocation != 12) {
         directions[currentLocation] = lockedDirections[currentLocation];
         lockedDirections[currentLocation] = null;
         keys -= 1;
