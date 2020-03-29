@@ -1,4 +1,4 @@
-{
+
 const divLocation = document.getElementById('location');
 const myPossibilities = document.getElementById('possibilities');
 const myInput = document.getElementById('myInput');
@@ -6,7 +6,7 @@ const feedback = document.getElementById('feedback');
 const imageLocation = document.getElementById('imageLocation');
 const myDescription = document.getElementById('description');
 const myInventory = document.getElementById('inventory');
-}
+
 //Where the player currently is
 let currentLocation = 22;
 // Which monsters are currently alive
@@ -170,27 +170,24 @@ function getInput(evt) {
 
 
     if (inputArray[0] == "SEARCH") {
-      if (checkItem) {
+      if (checkItem(currentLocation)) {
         inventory.push(treasures[currentLocation]);
         treasures[currentLocation] = null;
         console.log(inventory);
+        console.log(keys);
       }
     }
 
     if (inputArray[0] == "USE"){
-        inventory.forEach((element)=> {
-          if (i = 0, element == inputArray[1]) {
-            i++
-            console.log("You have this item")
-            }
-          })
-        } else {
-          feedback.innerHTML = "Invalid Input";
-          setTimeout(removeFeedback, 2000);
-
-        }
-        giveLocation();
-        myInput.value = "";
+      if (checkInventory(inputArray[1])) {
+        console.log("You used" + inputArray[1]);
+      }
+      else {
+        feedback.innerHTML = "Invalid Input";
+        setTimeout(removeFeedback, 2000);
+      }
+      giveLocation();
+      myInput.value = "";
     }
 
     if (inputArray[0] == "UNLOCK"){
@@ -212,10 +209,10 @@ function getInput(evt) {
     }
 
   }
+}
 //FUNCTIONS TO CHECK THE VARIABLE THINGS ONE CAN FIND IN THE CASTLE
 
 function checkItem(a) {
-  console.log(currentLocation);
   if (treasures[a] != null) {
     console.log("There's an item.");
     return true;
@@ -248,6 +245,22 @@ function checkMonsterLocation(a) {
   }
 }
 
+function checkInventory(a) {
+  let z = 0;
+
+  for (let i = 0; i < inventory.length; i++){
+    if (inventory[i] == a){
+      z += 1;
+    }
+  }
+
+  if (z == 1) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 
 // SHOWS THE DIRECTIONS, INVENTORY AND PICTURE.
@@ -260,11 +273,24 @@ function giveLocation() {
     myDirections += "<li>" + directions[currentLocation][i] + "</li>";
   }
   myPossibilities.innerHTML = myDirections;
-  myInventory.innerHTML = "Your Inventory is currently empty.";
+  myInventory.innerHTML = "Your inventory:"
+  if (inventory.length > 0) {
+    for (let i = 0; i < inventory.length; i++) {
+      myInventory += "<li>" + inventory[i] + "</li>";
+    }
+  }
+  else {
+    myInventory.innerHTML +=  " is currently empty.";
+  }
 }
 
 function removeFeedback() {
   feedback.innerHTML = "";
+}
+
+if (vineMonsterAlive == false && undeadMonsterAlive == false && gargoylesAlive == true) {
+  directions[12] = lockedDirections[12];
+  lockedDirections[12] = null;
 }
 
 giveLocation();
