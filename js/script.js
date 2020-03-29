@@ -12,8 +12,11 @@ let myKeys = document.getElementById('key')
 let currentLocation = 22;
 // Amount of Generic keys the player has
 let keys = 0;
-// Which monsters are currently alive
 
+//To see if the final door is locked
+let isSanctumClosed = true
+
+// Which monsters are currently alive
 let draculaAlive = true;
 let vineMonsterAlive = true;
 let undeadMonsterAlive = true;
@@ -133,6 +136,7 @@ let alternateDescriptions = [];{ // Will be used to change descriptions of the p
 myInput.addEventListener('keydown', getInput, false);
 
 function getInput(evt) {
+
   if (evt.key == "Enter") {
     let inputArray = myInput.value.split(" ");
     // inputArray.forEach((element) => {
@@ -173,7 +177,7 @@ function getInput(evt) {
 
 
     if (inputArray[0] == "SEARCH") {
-      if (checkItem(currentLocation)) {
+      if (checkItem(currentLocation) && treasures[currentLocation] != "key") {
         keys += 1
         switch (currentLocation) {
 
@@ -192,7 +196,7 @@ function getInput(evt) {
           inventory.push(treasures[currentLocation]);
           treasures[currentLocation] = null;
           console.log(myInventory.innerHTML)
-          myInventory.innerHTML += "<li>Torch</li>";
+          document.getElementById('displayInventory').innerHTML += "<li>Torch</li>";
           console.log(myInventory.innerHTML)
           console.log("Torch");
             break;
@@ -311,12 +315,12 @@ function giveLocation() {
   divLocation.innerHTML = locations[currentLocation];
   myDescription.innerHTML = descriptions[currentLocation];
   imageLocation.src = "media/" + images[currentLocation];
-  myDirections = "Available directions: ";
+  myDirections = "";
   for (let i = 0; i < directions[currentLocation].length; i++) {
     myDirections += "<li>" + directions[currentLocation][i] + "</li>";
   }
   myPossibilities.innerHTML = myDirections;
-  myInventory.innerHTML = "Your inventory: "
+  // myInventory.innerHTML = "Your inventory: "
   myKeys.innerHTML = "Keys: " + keys;
 }
 
@@ -324,9 +328,10 @@ function removeFeedback() {
   feedback.innerHTML = "";
 }
 
-if (vineMonsterAlive == false && undeadMonsterAlive == false && gargoylesAlive == true) {
+if (vineMonsterAlive == false && undeadMonsterAlive == false && gargoylesAlive == true && isSanctumClosed == true) {
   directions[12] = lockedDirections[12];
   lockedDirections[12] = null;
+  isSanctumClosed == false;
   feedback.innerHTML = "The inner sanctum has opened!";
   setTimeout(removeFeedback, 4000);
 }
