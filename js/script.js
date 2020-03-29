@@ -5,17 +5,20 @@ const myInput = document.getElementById('myInput');
 const feedback = document.getElementById('feedback');
 const imageLocation = document.getElementById('imageLocation');
 const myDescription = document.getElementById('description');
-const myInventory = document.getElementById('inventory');
+let  myInventory = document.getElementById('inventory');
+let myKeys = document.getElementById('key')
 
 //Where the player currently is
 let currentLocation = 22;
+// Amount of Generic keys the player has
+let keys = 0;
 // Which monsters are currently alive
+
 let draculaAlive = true;
 let vineMonsterAlive = true;
 let undeadMonsterAlive = true;
 let gargoylesAlive = true;
-// Amount of Generic keys the player has
-let keys = 0;
+
 //The locations where you can go and what they should contain
 let locations = []; {
 locations[2] = "Castle's Heart"; // You win
@@ -171,11 +174,43 @@ function getInput(evt) {
 
     if (inputArray[0] == "SEARCH") {
       if (checkItem(currentLocation)) {
-        inventory.push(treasures[currentLocation]);
-        treasures[currentLocation] = null;
+        keys += 1
+        switch (currentLocation) {
+
+          case 6:
+          inventory.push(treasures[currentLocation]);
+          treasures[currentLocation] = null;
+          myInventory.innerHTML += "<li>Whip</li>";
+          console.log("Whip");
+            break;
+          case 15:
+          inventory.push(treasures[currentLocation]);
+          treasures[currentLocation] = null;
+          console.log("Morning Star");
+            break;
+          case 22:
+          inventory.push(treasures[currentLocation]);
+          treasures[currentLocation] = null;
+          // myInventory.innerHTML += "<li>Torch</li>";
+          console.log("Torch");
+            break;
+          case 23:
+          inventory.push(treasures[currentLocation]);
+          treasures[currentLocation] = null;
+          console.log("Holy Water");
+            break;
+          default:
+
+        }
         console.log(inventory);
         console.log(keys);
       }
+      else {
+        feedback.innerHTML = "There is no item present";
+        setTimeout(removeFeedback, 2000);
+      }
+      giveLocation();
+      myInput.value = "";
     }
 
     if (inputArray[0] == "USE"){
@@ -191,21 +226,26 @@ function getInput(evt) {
     }
 
     if (inputArray[0] == "UNLOCK"){
-      if (checkLock(currentLocation) == true) {
+      if (checkLock(currentLocation) && keys > 0) {
         directions[currentLocation] = lockedDirections[currentLocation];
         lockedDirections[currentLocation] = null;
+        keys -= 1;
         giveLocation();
+        myInput.value = "";
         console.log("The door is unlocked!");
       }
       else {
+        feedback.innerHTML = "No door could be unlocked."
         console.log("The door remains locked.");
+        myInput.value = "";
+        setTimeout(removeFeedback, 2500);
       }
     }
 
     if (inputArray[0] != "GO" && inputArray[0] != "USE" && inputArray[0] != "UNLOCK" && inputArray[0] != "SEARCH" ){
       feedback.innerHTML = "Please use; GO, USE, SEARCH";
       myInput.value = "";
-      setTimeout(removeFeedback, 4000);
+      setTimeout(removeFeedback, 2500);
     }
 
   }
@@ -245,6 +285,7 @@ function checkMonsterLocation(a) {
   }
 }
 
+//To see if the item requested is present
 function checkInventory(a) {
   let z = 0;
 
@@ -268,12 +309,13 @@ function giveLocation() {
   divLocation.innerHTML = locations[currentLocation];
   myDescription.innerHTML = descriptions[currentLocation];
   imageLocation.src = "media/" + images[currentLocation];
-  myDirections = "mogelijke richtingen zijn: ";
+  myDirections = "Available directions: ";
   for (let i = 0; i < directions[currentLocation].length; i++) {
     myDirections += "<li>" + directions[currentLocation][i] + "</li>";
   }
   myPossibilities.innerHTML = myDirections;
   myInventory.innerHTML = "Your inventory:"
+  myKeys.innerHTML = "Keys: " + keys;
   if (inventory.length > 0) {
     for (let i = 0; i < inventory.length; i++) {
       myInventory += "<li>" + inventory[i] + "</li>";
@@ -291,6 +333,8 @@ function removeFeedback() {
 if (vineMonsterAlive == false && undeadMonsterAlive == false && gargoylesAlive == true) {
   directions[12] = lockedDirections[12];
   lockedDirections[12] = null;
+  feedback.innerHTML = "The inner sanctum has opened!";
+  setTimeout(removeFeedback, 4000);
 }
 
 giveLocation();
